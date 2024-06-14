@@ -21,6 +21,7 @@ function getComputerChoice(){
 
 function getHumanChoice(){
     let choice;
+    
     while(!(choice === "rock" || choice ==="paper"|| choice ==="scissors"))
     {
         choice = prompt("Input 'rock','paper',or 'scissors'")?.toLocaleLowerCase()
@@ -30,16 +31,17 @@ function getHumanChoice(){
 
 function playRound(humanChoice,computerChoice)
 {
-    if (humanChoice === "rock" && computerChoice ==="scissors") return 0;
-    else if (humanChoice === "paper" && computerChoice ==="rock") return 0;
-    else if (humanChoice === "scissors" && computerChoice ==="paper") return 0;
-    else if (humanChoice === "rock" && computerChoice ==="paper") return 1;
-    else if (humanChoice === "paper" && computerChoice ==="scissors") return 1;
-    else if (humanChoice === "scissors" && computerChoice ==="rock") return 1;
+    
+    if (humanChoice === "rock" && computerChoice ==="scissors") humanScore++;
+    else if (humanChoice === "paper" && computerChoice ==="rock") humanScore++;
+    else if (humanChoice === "scissors" && computerChoice ==="paper") humanScore++;
+    else if (humanChoice === "rock" && computerChoice ==="paper") computerScore++;
+    else if (humanChoice === "paper" && computerChoice ==="scissors") computerScore++;
+    else if (humanChoice === "scissors" && computerChoice ==="rock") computerScore++;
     else if (humanChoice === computerChoice) 
         {
             
-            return 2;
+            return;
         }
 
     
@@ -47,43 +49,31 @@ function playRound(humanChoice,computerChoice)
 
 }
 
+document.getElementById("buttons").addEventListener('click', handleButtonClick);
 
+function handleButtonClick(e){
+    const buttonId = e.target.id;
+    
+    playRound(buttonId,getComputerChoice());
+    if(humanScore === 5 )
+    {
+        alert("Human Wins!")
+    }
+    else if(computerScore === 5)
+        {
+            alert("Computer Wins!")
+        }
+    document.getElementById("humanScore").textContent = humanScore;
+    document.getElementById("computerScore").textContent = computerScore;
+    
+}
 
 let humanScore =0;
 let computerScore = 0;
 
 function playGame(){
-    let round = 1
-    while(round!== 6)
-    {
-        console.log("round: "+round)
-        let winner = playRound(getHumanChoice(), getComputerChoice());
-        
-        if (winner === 0)
-        {
-            humanScore++;
-        }
-        else if (winner === 1)
-        {
-            computerScore++;
-        }
-        else{
-            console.log("tie");
-            continue;
-        }
-        console.log("human score: "+ humanScore);
-        console.log("computer score: "+ computerScore);
-        round++;
-
-    }
-    console.log("game is over")
-    if (humanScore > computerScore)
-    {
-        console.log("human wins!")
-    }
-    else{
-        console.log("computer wins!")
-    }
+    
+    
 
 
 }
